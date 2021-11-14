@@ -1,0 +1,6 @@
+TestCentric .NET Core 2.1 Pluggable Agent 1.0
+
+This is the initial release of the netcoreapp2.1 pluggable agent.
+
+Pluggable agents allow the TestCentric Engine to support agents 
+for executing tests beyond those that are built in.
