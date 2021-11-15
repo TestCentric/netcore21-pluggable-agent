@@ -1,8 +1,3 @@
-// Package Testing
-const string GUI_RUNNER_NUGET_ID = "TestCentric.GuiRunner";
-const string GUI_RUNNER_CHOCO_ID = "testcentric-gui";
-const string GUI_RUNNER_VERSION = "2.0.0-dev00079";
-
 public abstract class PackageTester
 {
     const string TEST_RESULT = "TestResult.xml";
@@ -23,22 +18,21 @@ public abstract class PackageTester
 
     protected BuildParameters _parameters;
     protected ICakeContext _context;
+    protected GuiRunner _guiRunner;
 
     public PackageTester(BuildParameters parameters)
     {
         _parameters = parameters;
         _context = parameters.Context;
-
-        GuiRunner = _parameters.PackageTestDirectory + $"{RunnerId}.{GUI_RUNNER_VERSION}/tools/testcentric.exe";
     }
 
     protected abstract string PackageId { get; }
     protected abstract string RunnerId { get; }
-
-    protected string GuiRunner { get; }
-
+    
     public void RunAllTests()
     {
+        _guiRunner.InstallRunner();
+
         int errors = 0;
         foreach (var runtime in new[] { "netcoreapp1.1", "netcoreapp2.1" })
         {
@@ -60,35 +54,33 @@ public abstract class PackageTester
         // Delete result file ahead of time so we don't mistakenly
         // read a left-over file from another test run. Leave the
         // file after the run in case we need it to debug a failure.
-        if (_context.FileExists(TEST_RESULT))
-            _context.DeleteFile(TEST_RESULT);
+        if (_context.FileExists(_parameters.OutputDirectory + TEST_RESULT))
+            _context.DeleteFile(_parameters.OutputDirectory + TEST_RESULT);
 
-        RunGuiUnattended($"{_parameters.OutputDirectory}tests/{runtime}/{MOCK_ASSEMBLY}");
+        _guiRunner.RunUnattended($"{_parameters.OutputDirectory}tests/{runtime}/{MOCK_ASSEMBLY}");
 
-        return new ActualResult(TEST_RESULT);
-    }
-
-    public void RunGuiUnattended(string testAssembly)
-    {
-        _context.StartProcess(GuiRunner, new ProcessSettings()
-        {
-            Arguments = $"{testAssembly} --run --unattended --trace:Debug"
-        });
+        return new ActualResult(_parameters.OutputDirectory + TEST_RESULT);
     }
 }
 
 public class NuGetPackageTester : PackageTester
 {
-    public NuGetPackageTester(BuildParameters parameters) : base(parameters) { }
+    public NuGetPackageTester(BuildParameters parameters) : base(parameters)
+    {
+        _guiRunner = new GuiRunner(parameters, GuiRunner.NuGetId, "2.0.0-dev00079");
+    }
 
     protected override string PackageId => NUGET_ID;
-    protected override string RunnerId => GUI_RUNNER_NUGET_ID;
+    protected override string RunnerId => GuiRunner.NuGetId;
 }
 
 public class ChocolateyPackageTester : PackageTester
 {
-    public ChocolateyPackageTester(BuildParameters parameters) : base(parameters) { }
+    public ChocolateyPackageTester(BuildParameters parameters) : base(parameters)
+    {
+        _guiRunner = new GuiRunner(parameters, GuiRunner.ChocoId, "2.0.0-dev00079");
+    }
 
     protected override string PackageId => CHOCO_ID;
-    protected override string RunnerId => GUI_RUNNER_CHOCO_ID;
+    protected override string RunnerId => GuiRunner.ChocoId;
 }

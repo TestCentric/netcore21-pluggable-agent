@@ -2,6 +2,7 @@
 #load "./package-checks.cake"
 #load "./test-results.cake"
 #load "./package-tests.cake"
+#load "./testcentric-gui.cake"
 #load "./versioning.cake"
 
 // URLs for uploading packages
@@ -72,7 +73,7 @@ public class BuildParameters
 	// Packaging
 	public string NuGetPackageName => $"{NUGET_ID}.{PackageVersion}.nupkg";
 	public string NuGetPackage => PackageDirectory + NuGetPackageName;
-	public string ChocoPackageName => $"{CHOCO_ID}.{PackageVersion}.nupkg";
-	public string ChocoPackage => PackageDirectory + ChocoPackageName;
+	public string ChocolateyPackageName => $"{CHOCO_ID}.{PackageVersion}.nupkg";
+	public string ChocolateyPackage => PackageDirectory + ChocolateyPackageName;
 
 }
