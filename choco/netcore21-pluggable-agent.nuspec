@@ -18,7 +18,7 @@
     <docsUrl>https://test-centric.org</docsUrl>
     <mailingListUrl>https://groups.google.com/forum/#!forum/nunit-discuss</mailingListUrl>
     <bugTrackerUrl>https://github.com/Testcentric/netcore21-pluggable-agent/issues</bugTrackerUrl>
-    <tags>net40-pluggable-agent testcentric nunit extension pluggable agent netcoreapp2.1</tags>
+    <tags>netcore21-pluggable-agent testcentric nunit extension pluggable agent netcoreapp2.1</tags>
     <summary>TestCentric Engine extension for running tests under .NET Core 2.1</summary>
     <description>This extension allow the TestCentric GUI to run tests under the .NET Core 2.1 runtime.</description>
     <releaseNotes>https://raw.githubusercontent.com/TestCentric/netcore21-pluggable-agent/master/CHANGES.txt</releaseNotes>

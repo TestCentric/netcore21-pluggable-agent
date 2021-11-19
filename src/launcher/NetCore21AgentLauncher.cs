@@ -15,7 +15,7 @@ using TestCentric.Engine.Extensibility;
 namespace TestCentric.Engine.Services
 {
     [Extension]
-    public class Net40AgentLauncher : IAgentLauncher
+    public class NetCore21AgentLauncher : IAgentLauncher
     {
         public TestAgentInfo AgentInfo => new TestAgentInfo(
             GetType().Name,
@@ -53,7 +53,7 @@ namespace TestCentric.Engine.Services
             if (workDirectory != string.Empty)
                 sb.Append($" --work={workDirectory}");
 
-            var agentName = runAsX86 ? "net40-pluggable-agent-x86.exe" : "net40-pluggable-agent.exe";
+            var agentName = runAsX86 ? "netcore21-pluggable-agent-x86.exe" : "netcore21-pluggable-agent.exe";
             var agentDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "agent");
             var agentPath = Path.Combine(agentDir, agentName);
             var agentArgs = sb.ToString();

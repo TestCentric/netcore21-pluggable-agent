@@ -14,7 +14,7 @@ const string MOCK_ASSEMBLY = "mock-assembly.dll";
 
 const string DEFAULT_VERSION = "1.0.0";
 
-#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00005
+#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00006
 
 var target = Argument("target", "Default");
 
@@ -239,14 +239,14 @@ Task("TestNuGetPackage")
 	.IsDependentOn("InstallNuGetPackage")
 	.Does<BuildParameters>((parameters) =>
 	{
-		new NuGetPackageTester(parameters).RunAllTests();
+		new NuGetPackageTester(parameters).RunAllTests("netcoreapp1.1", "netcoreapp2.1");
 	});
 
 Task("TestChocolateyPackage")
 	.IsDependentOn("InstallChocolateyPackage")
 	.Does<BuildParameters>((parameters) =>
 	{
-		new ChocolateyPackageTester(parameters).RunAllTests();
+		new ChocolateyPackageTester(parameters).RunAllTests("netcoreapp1.1", "netcoreapp2.1");
 	});
 
 //////////////////////////////////////////////////////////////////////
