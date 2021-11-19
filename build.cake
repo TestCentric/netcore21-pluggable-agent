@@ -12,21 +12,11 @@ const string OUTPUT_ASSEMBLY = "netcore21-pluggable-agent.dll";
 const string UNIT_TEST_ASSEMBLY = "netcore21-agent-launcher.tests.exe";
 const string MOCK_ASSEMBLY = "mock-assembly.dll";
 
-#load "cake/parameters.cake"
+const string DEFAULT_VERSION = "1.0.0";
 
-//////////////////////////////////////////////////////////////////////
-// ARGUMENTS  
-//////////////////////////////////////////////////////////////////////
+#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00005
 
 var target = Argument("target", "Default");
-
-// Additional Argument
-//
-// --configuration=CONFIGURATION (parameters.cake)
-//     Sets the configuration (default is specified in DEFAULT_CONFIGURATION)
-//
-// --packageVersion=VERSION (versioning.cake)
-//     Bypasses GitVersion and causes the specified version to be used instead.
 
 //////////////////////////////////////////////////////////////////////
 // SETUP
