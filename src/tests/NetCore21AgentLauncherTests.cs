@@ -36,7 +36,7 @@ namespace TestCentric.Engine.Services
             "netcore-1.1", "netcore-2.1", "netcore-3.1", "netcore-5.0"
         };
 
-        private static readonly string[] SUPPORTED = new string[] { "net-2.0", "net-3.0", "net-3.5", "net-4.0", "net-4.5" };
+        private static readonly string[] SUPPORTED = new string[] { "netcore-1.1", "netcore-2.1" };
 
         private NetCore21AgentLauncher _launcher;
         private TestPackage _package;

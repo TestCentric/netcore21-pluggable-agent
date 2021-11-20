@@ -25,7 +25,7 @@ namespace TestCentric.Engine.Services
         {
             // Get target runtime
             string runtimeSetting = package.GetSetting("TargetRuntimeFramework", "");
-            return runtimeSetting.Length >= 5 && runtimeSetting.StartsWith("net-") && runtimeSetting[4] <= '4';
+            return runtimeSetting.Length >= 5 && runtimeSetting.StartsWith("netcore-") && runtimeSetting[8] <= '2';
         }
 
         public Process CreateProcess(Guid agentId, string agencyUrl, TestPackage package)
