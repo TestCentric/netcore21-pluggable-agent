@@ -53,7 +53,7 @@ namespace TestCentric.Engine.Services
             if (workDirectory != string.Empty)
                 sb.Append($" --work={workDirectory}");
 
-            var agentName = runAsX86 ? "netcore21-pluggable-agent-x86.exe" : "netcore21-pluggable-agent.exe";
+            var agentName = "netcore21-agent.dll";
             var agentDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "agent");
             var agentPath = Path.Combine(agentDir, agentName);
             var agentArgs = sb.ToString();
@@ -67,8 +67,8 @@ namespace TestCentric.Engine.Services
             startInfo.WorkingDirectory = Environment.CurrentDirectory;
             startInfo.LoadUserProfile = loadUserProfile;
 
-            startInfo.FileName = agentPath;
-            startInfo.Arguments = agentArgs;
+            startInfo.FileName = "dotnet";
+            startInfo.Arguments = agentPath + " " + agentArgs;
 
             return process;
         }
