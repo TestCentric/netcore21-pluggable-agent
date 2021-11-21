@@ -11,6 +11,7 @@ using System.Text;
 using NUnit.Engine;
 using NUnit.Engine.Extensibility;
 using TestCentric.Engine.Extensibility;
+using TestCentric.Engine.Internal;
 
 namespace TestCentric.Engine.Services
 {
@@ -47,13 +48,13 @@ namespace TestCentric.Engine.Services
             // Set options that need to be in effect before the package
             // is loaded by using the command line.
             if (traceLevel != "Off")
-                sb.Append($" --trace={traceLevel}");
+                sb.Append(" --trace=").EscapeProcessArgument(traceLevel);
             if (debugAgent)
                 sb.Append(" --debug-agent");
             if (workDirectory != string.Empty)
-                sb.Append($" --work={workDirectory}");
+                sb.Append($" --work=").EscapeProcessArgument(workDirectory);
 
-            var agentName = "netcore21-agent.dll";
+            var agentName = "netcore21-pluggable-agent.dll";
             var agentDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "agent");
             var agentPath = Path.Combine(agentDir, agentName);
             var agentArgs = sb.ToString();
@@ -68,7 +69,7 @@ namespace TestCentric.Engine.Services
             startInfo.LoadUserProfile = loadUserProfile;
 
             startInfo.FileName = "dotnet";
-            startInfo.Arguments = agentPath + " " + agentArgs;
+            startInfo.Arguments = $"{agentPath} {agentArgs}";
 
             return process;
         }
