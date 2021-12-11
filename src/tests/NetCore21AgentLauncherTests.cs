@@ -17,8 +17,7 @@ namespace TestCentric.Engine.Services
         private static readonly Guid AGENTID = Guid.NewGuid();
         private const string AGENT_URL = "tcp://127.0.0.1:1234/TestAgency";
         private static readonly string REQUIRED_ARGS = $"{AGENT_URL} --pid={Process.GetCurrentProcess().Id}";
-        private const string AGENT_NAME = "netcore21-pluggable-agent.exe";
-        private const string AGENT_NAME_X86 = "netcore21-pluggable-agent-x86.exe";
+        private const string AGENT_NAME = "netcore21-pluggable-agent.dll";
         private static string AGENT_DIR = Path.Combine(TestContext.CurrentContext.TestDirectory, "agent");
 
         // Constants used for settings
@@ -88,11 +87,13 @@ namespace TestCentric.Engine.Services
 
         private void CheckAgentPath(Process process, bool x86)
         {
-            string agentPath = Path.Combine(AGENT_DIR, x86 ? AGENT_NAME_X86 : AGENT_NAME);
-            Assert.That(process.StartInfo.FileName, Is.SamePath(agentPath));
+            Assert.That(process.StartInfo.FileName, Is.EqualTo("dotnet"));
+            string agentPath = Path.Combine(AGENT_DIR, AGENT_NAME);
+            Assert.That(process.StartInfo.Arguments, Does.StartWith(agentPath));
         }
 
         [TestCaseSource(nameof(RUNTIMES))]
+        [Ignore("X86 is not yet supported")]
         public void CreateX86Process(string runtime)
         {
             _package.Settings[TARGET_RUNTIME_FRAMEWORK] = runtime;
@@ -103,6 +104,7 @@ namespace TestCentric.Engine.Services
                 var process = _launcher.CreateProcess(AGENTID, AGENT_URL, _package);
                 CheckStandardProcessSettings(process);
                 CheckAgentPath(process, true);
+                Console.WriteLine($"{process.StartInfo.FileName} {process.StartInfo.Arguments}");
             }
             else
             {
