@@ -14,9 +14,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-		<PackageReference Include="NUnit.Engine.Api" Version="4.0.0-dev-001" />
-		<PackageReference Include="TestCentric.Engine.Core" Version="2.0.0-alpha5" />
-	</ItemGroup>
+    <PackageReference Include="NUnit.Engine.Api" Version="4.0.0-dev-05363" />
+    <PackageReference Include="TestCentric.Engine.Core" Version="2.0.0-dev00014" />
+  </ItemGroup>
 	
   <ItemGroup>
     <None Update="app.config">
