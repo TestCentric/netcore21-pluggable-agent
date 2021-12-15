@@ -8,14 +8,15 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>..\..\bin\$(Configuration)\agent\</OutputPath>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<ApplicationIcon>..\testcentric.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\testcentric.ico</ApplicationIcon>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit.Engine.Api" Version="4.0.0-dev-05363" />
-    <PackageReference Include="TestCentric.Engine.Core" Version="2.0.0-dev00014" />
+    <PackageReference Include="TestCentric.Engine.Core" Version="2.0.0-dev*" />
   </ItemGroup>
 	
   <ItemGroup>
