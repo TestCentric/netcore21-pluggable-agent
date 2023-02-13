@@ -1,10 +1,10 @@
-#tool nuget:?package=GitVersion.CommandLine&version=5.0.0
-#tool nuget:?package=GitReleaseManager&version=0.11.0
-#tool nuget:?package=TestCentric.GuiRunner&version=2.0.0-dev00089
+#tool nuget:?package=GitVersion.CommandLine&version=5.6.3
+#tool nuget:?package=GitReleaseManager&version=0.12.1
+#tool nuget:?package=TestCentric.GuiRunner&version=2.0.0-alpha7
 
 #load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00030
 
-var target = Argument("target", "Default");
+var target = Argument("target", Argument("t", "Default"));
 
 //////////////////////////////////////////////////////////////////////
 // SETUP
@@ -18,12 +18,12 @@ Setup<BuildSettings>((context) =>
 		title: "NetCore21PluggableAgent",
 		solutionFile: "netcore21-pluggable-agent.sln",
 		unitTest: "netcore21-agent-launcher.tests.exe",
-		guiVersion: "2.0.0-dev00089",
+		guiVersion: "2.0.0-alpha7",
 		githubOwner: "TestCentric",
 		githubRepository: "netcore21-pluggable-agent",
 		copyright: "Copyright (c) Charlie Poole and TestCentric Engine contributors.",
-		packages: new PackageDefinition[] { NuGetAgentPackage, ChocolateyAgentPackage }
-		//packageTests: new PackageTest[] { NetCore11PackageTest, NetCore21PackageTest }
+		packages: new PackageDefinition[] { NuGetAgentPackage, ChocolateyAgentPackage },
+		packageTests: new PackageTest[] { NetCore11PackageTest, NetCore21PackageTest }
 	);
 
 	Information($"NetCore21PluggableAgent {settings.Configuration} version {settings.PackageVersion}");
@@ -76,7 +76,7 @@ ExpectedResult CommonResult => new ExpectedResult("Failed")
 	Skipped = 7,
 	Assemblies = new ExpectedAssemblyResult[]
 	{
-		new ExpectedAssemblyResult("mock-assembly.dll", "Net40AgentLauncher")
+		new ExpectedAssemblyResult("mock-assembly.dll", "NetCore21AgentLauncher")
 	}
 };
 
