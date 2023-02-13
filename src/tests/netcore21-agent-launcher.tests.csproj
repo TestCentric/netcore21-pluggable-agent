@@ -4,16 +4,16 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>TestCentric.Agent</RootNamespace>
     <TargetFramework>net40</TargetFramework>
-		<GenerateSupportedRuntime>false</GenerateSupportedRuntime>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	  <OutputPath>..\..\bin\$(Configuration)\</OutputPath>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<ApplicationIcon>..\testcentric.ico</ApplicationIcon>
-		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-	  <PlatformTarget>AnyCPU</PlatformTarget>
+	<GenerateSupportedRuntime>false</GenerateSupportedRuntime>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<OutputPath>..\..\bin\$(Configuration)\</OutputPath>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<ApplicationIcon>..\testcentric.ico</ApplicationIcon>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	<PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   
-	<ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Runtime.Remoting" />
   </ItemGroup>
 
@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-		<PackageReference Include="NUnit" Version="3.11.0" />
-		<PackageReference Include="NUnitLite" Version="3.11.0" />
-    <PackageReference Include="NUnit.Engine.Api" Version="4.0.0-dev-05363" />
+	<PackageReference Include="NUnit" Version="3.11.0" />
+	<PackageReference Include="NUnitLite" Version="3.11.0" />
+    <PackageReference Include="NUnit.Engine.Api" Version="3.16.2" />
   </ItemGroup>
 
   <ItemGroup>
