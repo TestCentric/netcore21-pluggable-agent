@@ -29,7 +29,7 @@ Setup<BuildSettings>((context) =>
 	Information($"NetCore21PluggableAgent {settings.Configuration} version {settings.PackageVersion}");
 
 	if (BuildSystem.IsRunningOnAppVeyor)
-		AppVeyor.UpdateBuildVersion(settings.PackageVersion);
+		AppVeyor.UpdateBuildVersion(settings.PackageVersion + "-" + AppVeyor.Environment.Build.Number);
 
 	return settings;
 });
