@@ -42,7 +42,8 @@ var NuGetAgentPackage = new NuGetPackage(
 			HasDirectory("tools").WithFiles("netcore21-agent-launcher.dll", "nunit.engine.api.dll"),
 			HasDirectory("tools/agent").WithFiles(
 				"netcore21-pluggable-agent.dll", "netcore21-pluggable-agent.dll.config",
-				"nunit.engine.api.dll", "testcentric.engine.core.dll")
+				"nunit.engine.api.dll", "testcentric.engine.core.dll",
+				"testcentric.engine.metadata.dll", "testcentric.extensibility.dll")
 		});
 
 var ChocolateyAgentPackage = new ChocolateyPackage(
@@ -53,7 +54,8 @@ var ChocolateyAgentPackage = new ChocolateyPackage(
 				.WithFiles("LICENSE.txt", "CHANGES.txt", "VERIFICATION.txt"),
 			HasDirectory("tools/agent").WithFiles(
 				"netcore21-pluggable-agent.dll", "netcore21-pluggable-agent.dll.config",
-				"nunit.engine.api.dll", "testcentric.engine.core.dll")
+				"nunit.engine.api.dll", "testcentric.engine.core.dll",
+				"testcentric.engine.metadata.dll", "testcentric.extensibility.dll")
 		});
 
 var NetCore11PackageTest = new PackageTest(
