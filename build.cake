@@ -66,7 +66,7 @@ var NetCore21PackageTest = new PackageTest(
 	1, "Run mock-assembly.dll targeting .NET Core 2.1", GUI_RUNNER,
 	"tests/netcoreapp2.1/mock-assembly.dll", CommonResult);
 
-static readonly string GUI_RUNNER = "tools/TestCentric.GuiRunner.2.0.0-dev00089/tools/testcentric.exe";
+static readonly string GUI_RUNNER = "tools/TestCentric.GuiRunner.2.0.0-alpha7/tools/testcentric.exe";
 
 ExpectedResult CommonResult => new ExpectedResult("Failed")
 {
@@ -87,12 +87,10 @@ ExpectedResult CommonResult => new ExpectedResult("Failed")
 //////////////////////////////////////////////////////////////////////
 
 Task("Appveyor")
-	.IsDependentOn("Build")
-	.IsDependentOn("Test")
-	.IsDependentOn("Package")
+	.IsDependentOn("BuildTestAndPackage")
 	.IsDependentOn("Publish");
 
-Task("Full")
+Task("BuildTestAndPackage")
 	.IsDependentOn("Build")
 	.IsDependentOn("Test")
 	.IsDependentOn("Package");

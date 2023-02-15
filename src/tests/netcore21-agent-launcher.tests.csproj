@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>TestCentric.Agent</RootNamespace>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
 	<GenerateSupportedRuntime>false</GenerateSupportedRuntime>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<OutputPath>..\..\bin\$(Configuration)\</OutputPath>
