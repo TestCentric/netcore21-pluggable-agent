@@ -1,6 +1,6 @@
 #tool nuget:?package=GitVersion.CommandLine&version=5.6.3
 #tool nuget:?package=GitReleaseManager&version=0.12.1
-#tool nuget:?package=TestCentric.GuiRunner&version=2.0.0-alpha7
+#tool nuget:?package=TestCentric.GuiRunner&version=2.0.0-dev00226
 
 #load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00030
 
@@ -18,7 +18,7 @@ Setup<BuildSettings>((context) =>
 		title: "NetCore21PluggableAgent",
 		solutionFile: "netcore21-pluggable-agent.sln",
 		unitTest: "netcore21-agent-launcher.tests.exe",
-		guiVersion: "2.0.0-alpha7",
+		guiVersion: "2.0.0-dev00226",
 		githubOwner: "TestCentric",
 		githubRepository: "netcore21-pluggable-agent",
 		copyright: "Copyright (c) Charlie Poole and TestCentric Engine contributors.",
@@ -66,7 +66,7 @@ var NetCore21PackageTest = new PackageTest(
 	1, "Run mock-assembly.dll targeting .NET Core 2.1", GUI_RUNNER,
 	"tests/netcoreapp2.1/mock-assembly.dll", CommonResult);
 
-static readonly string GUI_RUNNER = "tools/TestCentric.GuiRunner.2.0.0-alpha7/tools/testcentric.exe";
+static readonly string GUI_RUNNER = "tools/TestCentric.GuiRunner.2.0.0-dev00226/tools/testcentric.exe";
 
 ExpectedResult CommonResult => new ExpectedResult("Failed")
 {
