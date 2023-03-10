@@ -88,14 +88,14 @@ ExpectedResult CommonResult => new ExpectedResult("Failed")
 
 Task("Appveyor")
 	.IsDependentOn("BuildTestAndPackage")
-	.IsDependentOn("Publish");
+	.IsDependentOn("Publish")
+	.IsDependentOn("CreateDraftRelease")
+	.IsDependentOn("CreateProductionRelease");
 
 Task("BuildTestAndPackage")
 	.IsDependentOn("Build")
 	.IsDependentOn("Test")
-	.IsDependentOn("Package")
-	.IsDependentOn("CreateDraftRelease")
-	.IsDependentOn("CreateProductionRelease");
+	.IsDependentOn("Package");
 
 //Task("Travis")
 //	.IsDependentOn("Build")
