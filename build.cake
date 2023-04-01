@@ -1,8 +1,7 @@
 #tool nuget:?package=GitVersion.CommandLine&version=5.6.3
 #tool nuget:?package=GitReleaseManager&version=0.12.1
-#tool nuget:?package=TestCentric.GuiRunner&version=2.0.0-dev00226
 
-#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00030
+#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00033
 
 var target = Argument("target", Argument("t", "Default"));
 
@@ -10,63 +9,80 @@ var target = Argument("target", Argument("t", "Default"));
 // SETUP
 //////////////////////////////////////////////////////////////////////
 
-Setup<BuildSettings>((context) =>
-{
-	var settings = BuildSettings.Initialize
-	(
-		context: context,
-		title: "NetCore21PluggableAgent",
-		solutionFile: "netcore21-pluggable-agent.sln",
-		unitTest: "netcore21-agent-launcher.tests.exe",
-		guiVersion: "2.0.0-dev00226",
-		githubOwner: "TestCentric",
-		githubRepository: "netcore21-pluggable-agent",
-		copyright: "Copyright (c) Charlie Poole and TestCentric Engine contributors.",
-		packages: new PackageDefinition[] { NuGetAgentPackage, ChocolateyAgentPackage },
-		packageTests: new PackageTest[] { NetCore11PackageTest, NetCore21PackageTest }
-	);
+static readonly string GUI_RUNNER = "tools/testcentric.exe";
 
-	Information($"NetCore21PluggableAgent {settings.Configuration} version {settings.PackageVersion}");
+BuildSettings.Initialize
+(
+	context: Context,
+	title: "NetCore21PluggableAgent",
+	solutionFile: "netcore21-pluggable-agent.sln",
+	unitTests: "netcore21-agent-launcher.tests.exe",
+	guiVersion: "2.0.0-dev00226",
+	githubOwner: "TestCentric",
+	githubRepository: "netcore21-pluggable-agent"
+);
 
-	if (BuildSystem.IsRunningOnAppVeyor)
-		AppVeyor.UpdateBuildVersion(settings.PackageVersion + "-" + AppVeyor.Environment.Build.Number);
+Information($"NetCore21PluggableAgent {BuildSettings.Configuration} version {BuildSettings.PackageVersion}");
 
-	return settings;
-});
+if (BuildSystem.IsRunningOnAppVeyor)
+	AppVeyor.UpdateBuildVersion(BuildSettings.PackageVersion + "-" + AppVeyor.Environment.Build.Number);
 
-var NuGetAgentPackage = new NuGetPackage(
-		id: "NUnit.Extension.NetCore21PluggableAgent",
-		source: "nuget/NetCore21PluggableAgent.nuspec",
-		checks: new PackageCheck[] {
-			HasFiles("LICENSE.txt", "CHANGES.txt"),
-			HasDirectory("tools").WithFiles("netcore21-agent-launcher.dll", "nunit.engine.api.dll"),
-			HasDirectory("tools/agent").WithFiles(
-				"netcore21-pluggable-agent.dll", "netcore21-pluggable-agent.dll.config",
-				"nunit.engine.api.dll", "testcentric.engine.core.dll",
-				"testcentric.engine.metadata.dll", "testcentric.extensibility.dll")
-		});
+var packageTests = new PackageTest[] {
+	new PackageTest(
+		1, "NetCore11PackageTest", "Run mock-assembly.dll targeting .NET Core 1.1",
+		"tests/netcoreapp1.1/mock-assembly.dll --run --unattended", CommonResult),
+	new PackageTest(
+		1, "NetCore21PackageTest", "Run mock-assembly.dll targeting .NET Core 2.1",
+		"tests/netcoreapp2.1/mock-assembly.dll --run --unattended", CommonResult)
+};
 
-var ChocolateyAgentPackage = new ChocolateyPackage(
+var nugetPackage = new NuGetPackage(
+	id: "NUnit.Extension.NetCore21PluggableAgent",
+	source: "nuget/NetCore21PluggableAgent.nuspec",
+	basePath: BuildSettings.OutputDirectory,
+	checks: new PackageCheck[] {
+		HasFiles("LICENSE.txt", "CHANGES.txt"),
+		HasDirectory("tools").WithFiles("netcore21-agent-launcher.dll", "nunit.engine.api.dll"),
+		HasDirectory("tools/agent").WithFiles(
+			"netcore21-pluggable-agent.dll", "netcore21-pluggable-agent.dll.config",
+			"nunit.engine.api.dll", "testcentric.engine.core.dll",
+			"testcentric.engine.metadata.dll", "testcentric.extensibility.dll") },
+	testRunner: new GuiRunner("TestCentric.GuiRunner", "2.0.0-dev00226"),
+	tests: packageTests );
+
+var chocolateyPackage = new ChocolateyPackage(
 		id: "nunit-extension-netcore21-pluggable-agent",
 		source: "choco/netcore21-pluggable-agent.nuspec",
+		basePath: BuildSettings.OutputDirectory,
 		checks: new PackageCheck[] {
 			HasDirectory("tools").WithFiles("netcore21-agent-launcher.dll", "nunit.engine.api.dll")
 				.WithFiles("LICENSE.txt", "CHANGES.txt", "VERIFICATION.txt"),
 			HasDirectory("tools/agent").WithFiles(
 				"netcore21-pluggable-agent.dll", "netcore21-pluggable-agent.dll.config",
 				"nunit.engine.api.dll", "testcentric.engine.core.dll",
-				"testcentric.engine.metadata.dll", "testcentric.extensibility.dll")
-		});
+				"testcentric.engine.metadata.dll", "testcentric.extensibility.dll") },
+		testRunner: new GuiRunner("testcentric-gui", "2.0.0-dev00226"),
+		tests: packageTests);
 
-var NetCore11PackageTest = new PackageTest(
-	1, "Run mock-assembly.dll targeting .NET Core 1.1", GUI_RUNNER,
-	"tests/netcoreapp1.1/mock-assembly.dll", CommonResult);
+BuildSettings.Packages.AddRange(new PackageDefinition[] { nugetPackage, chocolateyPackage });
 
-var NetCore21PackageTest = new PackageTest(
-	1, "Run mock-assembly.dll targeting .NET Core 2.1", GUI_RUNNER,
-	"tests/netcoreapp2.1/mock-assembly.dll", CommonResult);
+/*NuGetInstall(
+	"TestCentric.GuiRunner",
+	new NuGetInstallSettings()
+	{
+		Version = BuildSettings.GuiVersion,
+		Prerelease = true,
+		OutputDirectory = nugetPackage.ExtensionInstallDirectory
+	});
 
-static readonly string GUI_RUNNER = "tools/TestCentric.GuiRunner.2.0.0-dev00226/tools/testcentric.exe";
+NuGetInstall(
+	"testcentric-gui",
+	new NuGetInstallSettings()
+	{
+		Version = BuildSettings.GuiVersion,
+		Prerelease = true,
+		OutputDirectory = chocolateyPackage.ExtensionInstallDirectory,
+	});*/
 
 ExpectedResult CommonResult => new ExpectedResult("Failed")
 {

@@ -11,6 +11,7 @@
 	<ApplicationIcon>..\testcentric.ico</ApplicationIcon>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	<PlatformTarget>AnyCPU</PlatformTarget>
+	<AssemblyName>$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
   
   <ItemGroup>
