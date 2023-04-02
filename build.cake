@@ -1,7 +1,7 @@
 #tool nuget:?package=GitVersion.CommandLine&version=5.6.3
 #tool nuget:?package=GitReleaseManager&version=0.12.1
 
-#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00034
+#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00035
 
 var target = Argument("target", Argument("t", "Default"));
 
