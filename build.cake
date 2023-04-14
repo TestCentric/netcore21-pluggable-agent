@@ -1,7 +1,10 @@
 #tool nuget:?package=GitVersion.CommandLine&version=5.6.3
 #tool nuget:?package=GitReleaseManager&version=0.12.1
 
-#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00039
+// Load the recipe
+#load nuget:?package=TestCentric.Cake.Recipe&version=1.0.0-dev00040
+// Comment out above line and uncomment below for local tests of recipe changes
+//#load ../TestCentric.Cake.Recipe/recipe/*.cake
 
 var target = Argument("target", Argument("t", "Default"));
 
@@ -61,24 +64,6 @@ var chocolateyPackage = new ChocolateyPackage(
 		tests: packageTests);
 
 BuildSettings.Packages.AddRange(new PackageDefinition[] { nugetPackage, chocolateyPackage });
-
-/*NuGetInstall(
-	"TestCentric.GuiRunner",
-	new NuGetInstallSettings()
-	{
-		Version = BuildSettings.GuiVersion,
-		Prerelease = true,
-		OutputDirectory = nugetPackage.ExtensionInstallDirectory
-	});
-
-NuGetInstall(
-	"testcentric-gui",
-	new NuGetInstallSettings()
-	{
-		Version = BuildSettings.GuiVersion,
-		Prerelease = true,
-		OutputDirectory = chocolateyPackage.ExtensionInstallDirectory,
-	});*/
 
 ExpectedResult CommonResult => new ExpectedResult("Failed")
 {
