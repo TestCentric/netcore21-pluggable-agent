@@ -4,7 +4,7 @@
   <metadata>
     <id>nunit-extension-netcore21-pluggable-agent</id>
     <version>0.0.0</version>
-    <title>TestCentric Extension - NetCore21 Pluggable Agent</title>
+    <title>TestCentric Extension - Net Core 2.1 Pluggable Agent</title>
     <authors>Charlie Poole</authors>
     <owners>Charlie Poole</owners>
     <copyright>Copyright (c) 2021 Charlie Poole</copyright>
