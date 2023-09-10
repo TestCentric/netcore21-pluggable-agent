@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mock-assembly", "src\mock-a
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "netcore21-agent-launcher", "src\launcher\netcore21-agent-launcher.csproj", "{3D3B2910-D77C-4BEC-9433-6234A3257802}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "netcore21-pluggable-agent", "src\agent-exe\netcore21-pluggable-agent.csproj", "{A527285F-5383-483E-972E-8B41FBDE877A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "netcore21-agent", "src\agent-exe\netcore21-agent.csproj", "{A527285F-5383-483E-972E-8B41FBDE877A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
