@@ -17,7 +17,7 @@ namespace TestCentric.Engine.Services
         private static readonly Guid AGENTID = Guid.NewGuid();
         private const string AGENT_URL = "tcp://127.0.0.1:1234/TestAgency";
         private static readonly string REQUIRED_ARGS = $"{AGENT_URL} --pid={Process.GetCurrentProcess().Id}";
-        private const string AGENT_NAME = "netcore21-pluggable-agent.dll";
+        private const string AGENT_NAME = "netcore21-agent.dll";
         private static string AGENT_DIR = Path.Combine(TestContext.CurrentContext.TestDirectory, "agent");
 
         // Constants used for settings

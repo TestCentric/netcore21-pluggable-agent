@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>TestCentric.Agents</RootNamespace>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+		<GenerateSupportedRuntime>false</GenerateSupportedRuntime>
+        <OutputPath>..\..\bin\$(Configuration)\agent\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>..\testcentric.ico</ApplicationIcon>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NUnit.Engine.Api" Version="3.16.2" />
+        <PackageReference Include="TestCentric.Engine.Core" Version="2.0.0-beta1" />
+    </ItemGroup>
+	
+    <ItemGroup>
+        <None Update="app.config">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+  
+</Project>
