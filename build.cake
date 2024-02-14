@@ -1,7 +1,5 @@
-#tool NuGet.CommandLine&version=6.0.0
-
 // Load the recipe
-#load nuget:?package=TestCentric.Cake.Recipe&version=1.1.0-dev00066
+#load nuget:?package=TestCentric.Cake.Recipe&version=1.1.0-dev00082
 // Comment out above line and uncomment below for local tests of recipe changes
 //#load ../TestCentric.Cake.Recipe/recipe/*.cake
 
@@ -46,9 +44,9 @@ BuildSettings.Packages.Add(new NuGetPackage(
 			new DirectoryContent("tools/agent").WithFiles(
 				"agent/netcore21-agent.dll", "agent/netcore21-agent.pdb", "agent/netcore21-agent.dll.config",
 				"agent/netcore21-agent.deps.json", $"agent/netcore21-agent.runtimeconfig.json",
-				"agent/TestCentric.Agent.Core.dll", "agent/testcentric.engine.core.dll",
+				"agent/TestCentric.Agent.Core.dll",
 				"agent/testcentric.engine.api.dll", "agent/testcentric.extensibility.api.dll",
-				"agent/testcentric.extensibility.dll", "agent/testcentric.engine.metadata.dll",
+				"agent/testcentric.extensibility.dll", "agent/testcentric.metadata.dll",
 				"agent/TestCentric.InternalTrace.dll") ),
 	testRunner: new AgentRunner(BuildSettings.NuGetTestDirectory + "TestCentric.Extension.NetCore21PluggableAgent." + BuildSettings.PackageVersion + "/tools/agent/netcore21-agent.dll"),
 	tests: PackageTests) );
@@ -68,9 +66,9 @@ BuildSettings.Packages.Add(new ChocolateyPackage(
 			new DirectoryContent("tools/agent").WithFiles(
 				"agent/netcore21-agent.dll", "agent/netcore21-agent.pdb", "agent/netcore21-agent.dll.config",
 				"agent/netcore21-agent.deps.json", $"agent/netcore21-agent.runtimeconfig.json",
-				"agent/TestCentric.Agent.Core.dll", "agent/testcentric.engine.core.dll",
+				"agent/TestCentric.Agent.Core.dll",
 				"agent/testcentric.engine.api.dll", "agent/testcentric.extensibility.api.dll",
-				"agent/testcentric.extensibility.dll", "agent/testcentric.engine.metadata.dll",
+				"agent/testcentric.extensibility.dll", "agent/testcentric.metadata.dll",
 				"agent/TestCentric.InternalTrace.dll") ),
 	testRunner: new AgentRunner(BuildSettings.ChocolateyTestDirectory + "testcentric-extension-netcore21-pluggable-agent." + BuildSettings.PackageVersion + "/tools/agent/netcore21-agent.dll"),
 	tests: PackageTests) );
@@ -95,4 +93,4 @@ Task("Default")
 // EXECUTION
 //////////////////////////////////////////////////////////////////////
 
-RunTarget(target);
+RunTarget(CommandLineOptions.Target.Value);
